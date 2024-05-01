@@ -1,6 +1,8 @@
-package com.example.dictionary.model;
+package com.example.aggregator.model;
 
-public class Entry {
+import java.util.Objects;
+
+public class Entry implements Comparable<Entry>{
 
     String word;
     String definition;
@@ -37,4 +39,30 @@ public class Entry {
         sb.append('}');
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entry entry = (Entry) o;
+        return Objects.equals(word, entry.word) && Objects.equals(definition, entry.definition);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(word, definition);
+    }
+
+    @Override
+    public int compareTo(Entry that) {
+
+        if(this.word.compareTo(that.word) > 0){
+            return 1;
+        } else if (this.word.compareTo(that.word) < 0) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
 }
+

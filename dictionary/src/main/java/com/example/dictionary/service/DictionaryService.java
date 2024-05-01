@@ -34,7 +34,43 @@ public class DictionaryService {
         return DictionaryReference.getDictionary()
                 .entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().contains(value))
+                .filter(entry -> entry.getKey()
+                        .startsWith(value))
+                .sorted(Map.Entry.comparingByKey(Comparator.naturalOrder()))//functional programming, not imperative
+                .map(entry -> new Entry(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+    public List<Entry> getWordThatContain(String value) {
+
+        return DictionaryReference.getDictionary()
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey()
+                        .contains(value))
+                .sorted(Map.Entry.comparingByKey(Comparator.naturalOrder()))//functional programming, not imperative
+                .map(entry -> new Entry(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Entry> getWordsThatContainConsecutiveDoubleLetters(String value) {
+
+        return DictionaryReference.getDictionary()
+                .entrySet()
+                .stream()
+                .filter(entry -> {
+
+                    String word= entry.getKey();
+                    boolean duplicateConsecutiveLetters = false;
+                    for(int x =1; x < word.length(); x++) {
+                        if(word.charAt(x) == word.charAt(x-1)){
+                            duplicateConsecutiveLetters = true;
+                            break;
+                        }
+                    }
+
+                    return duplicateConsecutiveLetters;
+                })
+
                 .sorted(Map.Entry.comparingByKey(Comparator.naturalOrder()))//functional programming, not imperative
                 .map(entry -> new Entry(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());

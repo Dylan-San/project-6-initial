@@ -22,8 +22,6 @@ public class DictionaryReference {
 
     static {
 
-
-
         try {
             readDictionaryFile();
         } catch (JsonProcessingException e) {
@@ -35,9 +33,9 @@ public class DictionaryReference {
 
     }
 
-    private static void readDictionaryFile() throws JsonProcessingException{
+    private static void readDictionaryFile() throws JsonProcessingException {
 
-        StopWatch sw =new StopWatch();
+        StopWatch sw = new StopWatch();
         sw.start();
 
         InputStream inputStream = DictionaryReference.class.getClassLoader()
@@ -62,6 +60,7 @@ public class DictionaryReference {
                 .toString();
 
         logger.info(message);
+
     }
 
     public static Map<String, String> getDictionary() {
