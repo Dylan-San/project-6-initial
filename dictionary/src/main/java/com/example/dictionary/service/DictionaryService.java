@@ -40,6 +40,7 @@ public class DictionaryService {
                 .map(entry -> new Entry(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
     }
+
     public List<Entry> getWordThatContain(String value) {
 
         return DictionaryReference.getDictionary()
@@ -52,17 +53,17 @@ public class DictionaryService {
                 .collect(Collectors.toList());
     }
 
-    public List<Entry> getWordsThatContainConsecutiveDoubleLetters(String value) {
+    public List<Entry> getWordsThatContainConsecutiveDoubleLetters() {
 
         return DictionaryReference.getDictionary()
                 .entrySet()
                 .stream()
                 .filter(entry -> {
 
-                    String word= entry.getKey();
+                    String word = entry.getKey();
                     boolean duplicateConsecutiveLetters = false;
-                    for(int x =1; x < word.length(); x++) {
-                        if(word.charAt(x) == word.charAt(x-1)){
+                    for (int x = 1; x < word.length(); x++) {
+                        if (word.charAt(x) == word.charAt(x - 1)) {
                             duplicateConsecutiveLetters = true;
                             break;
                         }
@@ -74,5 +75,19 @@ public class DictionaryService {
                 .sorted(Map.Entry.comparingByKey(Comparator.naturalOrder()))//functional programming, not imperative
                 .map(entry -> new Entry(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    public List<Entry> getWordsEndingWith(String value) {
+        return DictionaryReference.getDictionary()
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().endsWith(value))
+                .sorted(Map.Entry.comparingByKey(Comparator.naturalOrder()))
+                .map(entry -> new Entry(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Entry> getWordsThatContain(String value) {
+        return null;
     }
 }

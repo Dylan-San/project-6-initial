@@ -20,6 +20,7 @@ public class AggregatorController {
     private final AggregatorService service;
 
     public AggregatorController(AggregatorService service) {
+
         this.service = service;
     }
 
@@ -84,6 +85,23 @@ public class AggregatorController {
                 .toString();
         logger.info(message);
 
+        return entries;
+    }
+
+    @GetMapping("/getAllPalindromes")
+    public List<Entry> getAllPalindromes() {
+
+        StopWatch sw = new StopWatch();
+        sw.start();
+        List<Entry> entries = service.getAllPalindromes(); // Updated service call
+        sw.stop();
+
+        long nanoSeconds = sw.getLastTaskTimeNanos();
+        String message = new StringBuilder().append("Retrieved all palindromes in ")
+                .append(nanoSeconds / 1000000.0)
+                .append("ms")
+                .toString();
+        logger.info(message);
         return entries;
     }
 }
